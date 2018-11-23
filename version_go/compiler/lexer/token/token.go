@@ -40,12 +40,12 @@ func generate_token_list(file_path string) []Token {
 
 		for {
 			s.nextch()
-			//跳过空白符
-			if s.ch != ' ' || s.ch != '\n' || s.ch != '\t' {
+
+			if s.ch != ' ' || s.ch != '\n' || s.ch != '\t' { //跳过空白符
 				break
 			}
 		}
-		if s.ch >= 'a' && s.ch <= 'z' || s.ch >= 'A' && s.ch <= 'Z' || s.ch == '_' {
+		if s.ch >= 'a' && s.ch <= 'z' || s.ch >= 'A' && s.ch <= 'Z' || s.ch == '_' { //判断是关键字还是变量
 			var token Token
 			token.line = s.line
 			token.column = s.column
@@ -64,6 +64,11 @@ func generate_token_list(file_path string) []Token {
 				token.token_type = IDENTITY
 			}
 			token_list = append(token_list, token)
+		} else if s.ch == '"' { //字符串
+			var token Token
+			token.line = s.line
+			token.column = s.column
+
 		}
 	}
 }
