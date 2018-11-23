@@ -27,7 +27,7 @@ char scan(FILE *file)
     if (lastch == "\n")      //新行
     {
         lineNum++; //行号增加
-        colNum++;  //列号清零
+        colNum=0;  //列号清零
     }
     if (ch == -1) //文件结束，自动关闭
     {
