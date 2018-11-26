@@ -68,7 +68,13 @@ func generate_token_list(file_path string) []Token {
 			var token Token
 			token.line = s.line
 			token.column = s.column
+			token.token_type = STRING
+			s.nextch()
+			for s.ch != '"' {
+				if s.ch == '\\' { //转义
 
+				}
+			}
 		}
 	}
 }
