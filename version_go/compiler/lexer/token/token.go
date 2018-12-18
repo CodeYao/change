@@ -9,10 +9,33 @@ var judge_token_type map[string]TokenType
 func init() {
 	//初始化关键字
 	judge_token_type = map[string]TokenType{
-		"int":      INT,
-		"char":     CHAR,
-		"void":     VOID,
-		"extern":   EXTERN,
+		"int":    INT_T,
+		"bool":   BOOL_T,
+		"byte":   BYTE_T,
+		"int8":   INT8_T,
+		"int16":  INT16_T,
+		"int32":  INT32_T,
+		"int64":  INT64_T,
+		"uint":   UINT_T,
+		"uint8":  UINT8_T,
+		"uint16": UINT16_T,
+		"uint32": UINT32_T,
+		"uint64": UINT64_T,
+		"float":  FLOAT_T,
+		"double": DOUBLE_T,
+		"string": STRING_T,
+		"map":    MAP,
+		"void":   VOID,
+		"extern": EXTERN,
+		"struct": STRUCT,
+		"enum":   ENUM,
+
+		"public":  PUBLIC,
+		"private": PRIVATE,
+
+		"import":   IMPORT,
+		"contract": CONTRACT,
+
 		"if":       IF,
 		"else":     ELSE,
 		"switch":   SWITCH,
@@ -95,6 +118,7 @@ func generate_token_list() []Token {
 					break
 				} else {
 					token.Str += string(s.ch)
+					s.nextch()
 				}
 			}
 			if s.ch == '"' {
@@ -137,6 +161,7 @@ func generate_token_list() []Token {
 				fmt.Printf("line:%d,column:%d,value:%s,message:字符不可为空\n", token.Line, token.Column, token.Str)
 			} else {
 				token.Str += string(s.ch)
+				s.nextch()
 			}
 			if s.ch == '\'' {
 				s.nextch() //读掉引号
@@ -212,6 +237,10 @@ func generate_token_list() []Token {
 					token.Token_type = INC
 					token.Str += string(s.ch)
 					s.nextch()
+				} else if s.ch == '=' {
+					token.Token_type = ADD_ASSIGN
+					token.Str += string(s.ch)
+					s.nextch()
 				} else {
 					token.Token_type = ADD
 				}
@@ -220,13 +249,38 @@ func generate_token_list() []Token {
 					token.Token_type = DEC
 					token.Str += string(s.ch)
 					s.nextch()
+				} else if s.ch == '=' {
+					token.Token_type = SUB_ASSIGN
+					token.Str += string(s.ch)
+					s.nextch()
 				} else {
 					token.Token_type = SUB
 				}
 			case '*':
-				token.Token_type = MUL
+				if s.ch == '=' {
+					token.Token_type = MUL_ASSIGN
+					token.Str += string(s.ch)
+					s.nextch()
+				} else {
+					token.Token_type = MUL
+				}
+
 			case '/':
-				token.Token_type = DIV
+				if s.ch == '=' {
+					token.Token_type = DIV_ASSIGN
+					token.Str += string(s.ch)
+					s.nextch()
+				} else {
+					token.Token_type = DIV
+				}
+			case '%':
+				if s.ch == '=' {
+					token.Token_type = MOD_ASSIGN
+					token.Str += string(s.ch)
+					s.nextch()
+				} else {
+					token.Token_type = MOD
+				}
 			case '=':
 				if s.ch == '=' {
 					token.Token_type = EQ
@@ -240,6 +294,15 @@ func generate_token_list() []Token {
 					token.Token_type = GE
 					token.Str += string(s.ch)
 					s.nextch()
+				} else if s.ch == '<' {
+					token.Token_type = SHL
+					token.Str += string(s.ch)
+					s.nextch()
+					if s.ch == '=' {
+						token.Token_type = SHL_ASSIGN
+						token.Str += string(s.ch)
+						s.nextch()
+					}
 				} else {
 					token.Token_type = GT
 				}
@@ -248,12 +311,34 @@ func generate_token_list() []Token {
 					token.Token_type = LE
 					token.Str += string(s.ch)
 					s.nextch()
+				} else if s.ch == '>' {
+					token.Token_type = SHR
+					token.Str += string(s.ch)
+					s.nextch()
+					if s.ch == '=' {
+						token.Token_type = SHR_ASSIGN
+						token.Str += string(s.ch)
+						s.nextch()
+					}
 				} else {
 					token.Token_type = LT
 				}
 			case '&':
 				if s.ch == '&' {
 					token.Token_type = LAND
+					token.Str += string(s.ch)
+					s.nextch()
+				} else if s.ch == '^' {
+					token.Token_type = AND_NOT
+					token.Str += string(s.ch)
+					s.nextch()
+					if s.ch == '=' {
+						token.Token_type = AND_NOT_ASSIGN
+						token.Str += string(s.ch)
+						s.nextch()
+					}
+				} else if s.ch == '=' {
+					token.Token_type = AND_ASSIGN
 					token.Str += string(s.ch)
 					s.nextch()
 				} else {
@@ -264,8 +349,20 @@ func generate_token_list() []Token {
 					token.Token_type = LOR
 					token.Str += string(s.ch)
 					s.nextch()
+				} else if s.ch == '=' {
+					token.Token_type = OR_ASSIGN
+					token.Str += string(s.ch)
+					s.nextch()
 				} else {
 					token.Token_type = OR
+				}
+			case '^':
+				if s.ch == '=' {
+					token.Token_type = XOR_ASSIGN
+					token.Str += string(s.ch)
+					s.nextch()
+				} else {
+					token.Token_type = XOR
 				}
 			case '(':
 				token.Token_type = LPAREN

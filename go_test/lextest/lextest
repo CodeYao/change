@@ -1,30 +1,42 @@
-void main(){
-    int a=5.12345.5
-    int c=a+5
-    if(a+5>6||a>2&&a<=6){
-        int b=1
+import "github.com/tjfoc"
+
+contract{
+    struct aa {
+        int a
+        uint bb
     }
-    for(int c=6;c>5;c++){
-        if c==4{
-            break
-        }else if c!=5{
-            continue
+    enum (
+        aa
+        bb
+        cc
+    )
+    void main(){
+        int a=5.12345.5
+        int c=a+5
+        if(a+5>6||a>2&&a<=6){
+            int b=1
         }
-    }
-          @@  
-    switch(c){
-        case 5:
-        default:
-    }
+        for(int c=6;c>5;c++){
+            if c==4{
+                break
+            }else if c!=5{
+                continue
+            }
+        } 
+        switch(c){
+            case 5:
+            default:
+        }
 
-    while(2>1){
-    a=null
-    d=true
-    f=false
+        while(2>1){
+        a=null
+        d=true
+        f=false
+        }
+
+        do{
+
+        }while(a>b)
+        return
     }
-
-    do{
-
-    }while(a>b)
-    return
 }

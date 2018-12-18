@@ -25,8 +25,24 @@ const (
 	DIV // /
 	MOD // %
 
-	AND // &
-	OR  // |
+	AND     // &
+	OR      // |
+	XOR     // ^
+	SHL     // <<
+	SHR     // >>
+	AND_NOT // &^
+
+	ADD_ASSIGN     // +=
+	SUB_ASSIGN     // -=
+	MUL_ASSIGN     // *=
+	DIV_ASSIGN     // /=
+	MOD_ASSIGN     // %=
+	AND_ASSIGN     // &=
+	OR_ASSIGN      // |=
+	XOR_ASSIGN     // ^=
+	SHL_ASSIGN     // <<=
+	SHR_ASSIGN     // >>=
+	AND_NOT_ASSIGN // &^=
 
 	INC // ++
 	DEC // --
@@ -59,10 +75,32 @@ const (
 
 	keyword_beg //关键字开始
 
-	INT_T  //int
-	CHAR_T //char
-	VOID   //void
-	EXTERN //extern
+	INT_T    //int
+	BOOL_T   //bool
+	BYTE_T   //byte
+	INT8_T   //int8
+	INT16_T  //int16
+	INT32_T  //int32
+	INT64_T  //int64
+	UINT_T   //uint
+	UINT8_T  //uint8
+	UINT16_T //uint16
+	UINT32_T //uint32
+	UINT64_T //uint64
+	FLOAT_T  //float
+	DOUBLE_T //double
+	STRING_T //string
+	MAP      //map
+	VOID     //void
+	EXTERN   //extern
+	STRUCT   //struct
+	ENUM     //enum
+
+	PUBLIC  //public
+	PRIVATE //private
+
+	IMPORT   //import
+	CONTRACT //contract
 
 	IF       //if
 	ELSE     //else

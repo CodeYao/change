@@ -7,8 +7,6 @@ import (
 	"os"
 )
 
-const BUFF_SIZE = 512 //缓冲区大小
-
 var reader *bufio.Reader //文件内容
 
 type Scanner struct {
