@@ -25,27 +25,52 @@ const (
 	DIV // /
 	MOD // %
 
+	AND // &
+	OR  // |
+
+	INC // ++
+	DEC // --
+
 	ASSIGN // =
 
-	EQ // ==
-	NE // !=
-	GT // >
-	LT // <
-	GE // <=
-	LE // >=
+	LAND // &&
+	LOR  // ||
+	EQ   // ==
+	NE   // !=
+	GT   // >
+	LT   // <
+	GE   // >=
+	LE   // <=
+	LNOT // !
 
-	LP // (
-	RP // )
-	LC // {
-	RC // }
+	LPAREN // (
+	LBRACK // [
+	LBRACE // {
+	COMMA  // ,
+	PERIOD // .
+
+	RPAREN    // )
+	RBRACK    // ]
+	RBRACE    // }
+	SEMICOLON // ;
+	COLON     // :
 
 	operator_end //操作符结束
 
 	keyword_beg //关键字开始
 
+	INT_T  //int
+	CHAR_T //char
+	VOID   //void
+	EXTERN //extern
+
 	IF       //if
 	ELSE     //else
+	SWITCH   //switch
+	CASE     //case
+	DEFAULT  //default
 	WHILE    //while
+	DO       //do
 	FOR      //for
 	RETURN   //return
 	BREAK    // break
@@ -58,17 +83,17 @@ const (
 )
 
 type Token struct {
-	token_type TokenType //类型
-	str        string    //内容
-	line       int       //所在行
-	column     int       //所在列
+	Token_type TokenType //类型
+	Str        string    //内容
+	Line       int       //所在行
+	Column     int       //所在列
 }
 
 //是否基本字面量
-func (t Token) IsLiteral() bool { return literal_beg < t.token_type && t.token_type < literal_end }
+func (t Token) IsLiteral() bool { return literal_beg < t.Token_type && t.Token_type < literal_end }
 
 //是否操作符
-func (t Token) IsOperator() bool { return operator_beg < t.token_type && t.token_type < operator_end }
+func (t Token) IsOperator() bool { return operator_beg < t.Token_type && t.Token_type < operator_end }
 
 //是否关键字
-func (t Token) IsKeyword() bool { return keyword_beg < t.token_type && t.token_type < keyword_end }
+func (t Token) IsKeyword() bool { return keyword_beg < t.Token_type && t.Token_type < keyword_end }

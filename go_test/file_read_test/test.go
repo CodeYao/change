@@ -28,6 +28,7 @@ import (
 // }
 
 func main() {
+	var s string
 	line := 1
 	file_obj, _ := os.Open("testfile")
 	defer file_obj.Close()
@@ -35,14 +36,18 @@ func main() {
 	reader := bufio.NewReaderSize(file_obj, 1024)
 	for {
 		byt, err := reader.ReadByte()
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
+
 		if byt == '\n' {
 			line++
+		} else if byt == 0 {
+			fmt.Println("====================================")
 		}
-		fmt.Printf("byt : %c\n", byt)
+		s += string(byt)
+		fmt.Printf("byt : %v\n", byt)
+		if err != nil {
+			fmt.Println(err, s)
+			break
+		}
 	}
 	fmt.Println("line :", line)
 }

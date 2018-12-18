@@ -20,7 +20,7 @@ type Scanner struct {
 
 func read_file(file_path string) {
 	if file, err := os.Open(file_path); err == nil {
-		defer file.Close()
+		// defer file.Close()
 		reader = bufio.NewReaderSize(file, 4096)
 	} else {
 		log.Fatalf("read file err :[%v]", err)
@@ -32,17 +32,17 @@ func (s *Scanner) nextch() {
 	if reader == nil {
 		log.Fatalf("no file!!!")
 	}
+	s.lastch = s.ch
+	if s.lastch == '\n' {
+		s.line += 1
+		s.column = 0
+	}
 	byt, err := reader.ReadByte()
 	if err != nil {
 		fmt.Println(err)
 		fmt.Println("END")
 	}
-	fmt.Printf("get char : [%c]\n", byt)
+	// fmt.Printf("get char : [%c]\n", byt)
 	s.column += 1
 	s.ch = byt
-	if s.lastch == '\n' {
-		s.line += 1
-		s.column = 0
-	}
-	s.lastch = s.ch
 }
